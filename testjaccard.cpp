@@ -85,9 +85,14 @@ int Jaccrad_similar::get_grams(const std::string& str, std::vector<std::string>&
     _jieba->Cut(doc, grams, true);
     //cout << limonp::Join(grams.begin(), grams.end(), "/") << endl;
 
-    for (auto i = grams.begin(); i != grams.end(); ++i) {
-      if (_stop_words.find(*i) != _stop_words.end())
-        grams.erase(i);
+    for (auto i = grams.begin(); i != grams.end(); ) {
+        auto it = _stop_words.find(*i);
+        if (_stop_words.find(*i) != _stop_words.end())
+        {
+            i = grams.erase(i);
+        }
+        else
+            i++;
     }
     // cout << limonp::Join(grams.begin(), grams.end(), "/") << endl;
     return 0;
